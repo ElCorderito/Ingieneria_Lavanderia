@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Lista de Ropa</h1>
+    <a href="{% url 'crear_ropa' %}" class="btn btn-primary mb-3">Crear Nueva Ropa</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prenda in prendas %}
+            <tr>
+                <td>{{ prenda.nombre }}</td>
+                <td>{{ prenda.precio }}</td>
+                <td>
+                    <a href="{% url 'editar_ropa' prenda.id %}" class="btn btn-info">Editar</a>
+                    <button type="button" class="btn btn-danger" onclick="confirmarEliminacion({{ prenda.id }})">Eliminar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function confirmarEliminacion(id) {
+        if (confirm('¿Estás seguro de querer eliminar esta ropa?')) {
+            const url = `{% url 'eliminar_ropa' 999999 %}`.replace('999999', id);
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload(); // Recarga la página para actualizar la lista
+                } else {
+                    alert('Error al eliminar la ropa');
+                }
+            });
+        }
+    }
+</script>
+{% endblock %}
+
+

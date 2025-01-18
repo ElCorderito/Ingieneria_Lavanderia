@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Gestionar Pedido #{{ pedido.id }}</h1>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="card-title">Detalles del Tipo de Servicio</h2>
+        </div>
+        <div class="card-body">
+            {% for servicio in pedido.servicios.all %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p><strong>Tipo de Servicio:</strong> {{ servicio.get_tipo_servicio_display }}</p>
+                    <p><strong>Cantidad de Ropa:</strong> {{ servicio.cantidad_ropa }}</p>
+                    <p><strong>Tipo de Ropa:</strong> {{ servicio.get_tipo_ropa_display }}</p>
+                    <p><strong>Prendas:</strong>
+                        <ul>
+                            {% for prenda in servicio.tipo_prenda.all %}
+                            <li>{{ prenda.nombre }}</li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                    <p><strong>Detalles Extras:</strong> {{ servicio.detalles_extra }}</p>
+                    <p><strong>Dirección de Entrega:</strong> {{ servicio.dir_entrega }}</p>
+                    <p><strong>Precio:</strong> {{ servicio.precio }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Detalles del Pedido</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Guardar Pedido</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

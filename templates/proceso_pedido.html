@@ -1,0 +1,147 @@
+{% extends 'base_cliente.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Tus pedidos en proceso</h1>
+    
+    <h2>Pedidos en Espera</h2>
+    {% if pedidos_en_espera %}
+    <div class="row">
+        {% for pedido in pedidos_en_espera %}
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pedido #{{ pedido.id }}</h5>
+                    <p class="card-text">Cliente: {{ pedido.cliente.user.username }}</p>
+                    <p class="card-text">Direccion: {{ pedido.cliente.dir_cliente }}</p>
+                    <p class="card-text">Fecha: {{ pedido.fecha_pedido.date }}</p>
+                    <p class="card-text">Hora: {{ pedido.fecha_pedido.hour }}</p>
+                    <p class="card-text">Estado: {{ pedido.get_estado_display }}</p>
+                    <p class="card-text">Total: {{ pedido.total }}</p>
+                    <p class="card-text">Servicios:</p>
+                    <ul>
+                        {% for detalle in pedido.detalles.all %}
+                        <li>
+                            <p><strong>Ropa:</strong> {{ detalle.ropa.nombre }}</p>
+                            <p><strong>Cantidad:</strong> {{ detalle.cantidad }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No hay pedidos en espera.</p>
+    {% endif %}
+    
+    <h2>Pedidos Aceptados</h2>
+    {% if pedidos_aceptados %}
+    <div class="row">
+        {% for pedido in pedidos_aceptados %}
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pedido #{{ pedido.id }}</h5>
+                    <p class="card-text">Cliente: {{ pedido.cliente.user.username }}</p>
+                    <p class="card-text">Direccion: {{ pedido.cliente.dir_cliente }}</p>
+                    <p class="card-text">Fecha: {{ pedido.fecha_pedido }}</p>
+                    <p class="card-text">Hora: {{ pedido.hora }}</p>
+                    <p class="card-text">Estado: {{ pedido.get_estado_display }}</p>
+                    <p class="card-text">Total: {{ pedido.total }}</p>
+                    <p class="card-text">Servicios:</p>
+                    <ul>
+                        {% for detalle in pedido.detalles.all %}
+                        <li>
+                            <p><strong>Ropa:</strong> {{ detalle.ropa.nombre }}</p>
+                            <p><strong>Cantidad:</strong> {{ detalle.cantidad }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% if not pedido.pago %}
+                    <a href="{% url 'realizar_pago_cliente' pedido.id %}" class="btn btn-primary">Pagar</a>
+                    {% else %}
+                    <p class="text-success">Pagado</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No hay pedidos aceptados.</p>
+    {% endif %}
+    
+    <h2>Pedidos Terminados</h2>
+    {% if pedidos_terminados %}
+    <div class="row">
+        {% for pedido in pedidos_terminados %}
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pedido #{{ pedido.id }}</h5>
+                    <p class="card-text">Cliente: {{ pedido.cliente.user.username }}</p>
+                    <p class="card-text">Direccion: {{ pedido.cliente.dir_cliente }}</p>
+                    <p class="card-text">Fecha: {{ pedido.fecha_pedido }}</p>
+                    <p class="card-text">Hora: {{ pedido.hora }}</p>
+                    <p class="card-text">Estado: {{ pedido.get_estado_display }}</p>
+                    <p class="card-text">Total: {{ pedido.total }}</p>
+                    <p class="card-text">Servicios:</p>
+                    <ul>
+                        {% for detalle in pedido.detalles.all %}
+                        <li>
+                            <p><strong>Ropa:</strong> {{ detalle.ropa.nombre }}</p>
+                            <p><strong>Cantidad:</strong> {{ detalle.cantidad }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% if not pedido.pago %}
+                    <a href="{% url 'realizar_pago_cliente' pedido.id %}" class="btn btn-primary">Pagar</a>
+                    {% else %}
+                    <p class="text-success">Pagado</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No hay pedidos terminados.</p>
+    {% endif %}
+    
+    <h2>Pedidos Rechazados</h2>
+    {% if pedidos_rechazados %}
+    <div class="row">
+        {% for pedido in pedidos_rechazados %}
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pedido #{{ pedido.id }}</h5>
+                    <p class="card-text">Cliente: {{ pedido.cliente.user.username }}</p>
+                    <p class="card-text">Direccion: {{ pedido.cliente.dir_cliente }}</p>
+                    <p class="card-text">Fecha: {{ pedido.fecha_pedido }}</p>
+                    <p class="card-text">Hora: {{ pedido.hora }}</p>
+                    <p class="card-text">Estado: {{ pedido.get_estado_display }}</p>
+                    <p class="card-text">Total: {{ pedido.total }}</p>
+                    <p class="card-text">Servicios:</p>
+                    <ul>
+                        {% for detalle in pedido.detalles.all %}
+                        <li>
+                            <p><strong>Ropa:</strong> {{ detalle.ropa.nombre }}</p>
+                            <p><strong>Cantidad:</strong> {{ detalle.cantidad }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No hay pedidos rechazados.</p>
+    {% endif %}
+    
+    <a href="{% url 'index_cliente' %}" class="btn btn-danger">Salir</a>
+</div>
+{% endblock %}
+

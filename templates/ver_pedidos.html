@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Ver Pedidos</h1>
+    
+    <!-- Pedidos en espera -->
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-3">Pedidos en espera</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Cliente</th>
+                            <th>Dirección</th>
+                            <th>Tipo(s) de Servicio</th>
+                            <th>Total</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pedido in pedidos_en_espera %}
+                        <tr>
+                            <td>{{ pedido.id }}</td>
+                            <td>{{ pedido.fecha_pedido.date }}</td>
+                            <td>{{ pedido.fecha_pedido.time }}</td>
+                            <td>{{ pedido.cliente.user.username }}</td>
+                            <td>{{ pedido.cliente.dir_cliente }}</td>
+                            <td>
+                                <ul>
+                                    {% for detalle in pedido.detalles.all %}
+                                    <li>{{ detalle.ropa.nombre }} - Cantidad: {{ detalle.cantidad }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>{{ pedido.total }}</td>
+                            <td>
+                                <form method="post" action="{% url 'cambiar_estado_pedido' pedido.id 'AC' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success" onclick="return confirm('¿Estás seguro de que deseas aceptar este pedido?');">Aceptar</button>
+                                </form>
+                                <form method="post" action="{% url 'cambiar_estado_pedido' pedido.id 'RE' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas rechazar este pedido?');">Rechazar</button>
+                                </form>
+                                <a href="{% url 'gestionar_pedido' pedido.id %}" class="btn btn-primary">Gestionar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pedidos aceptados -->
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-3">Pedidos aceptados</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Cliente</th>
+                            <th>Dirección</th>
+                            <th>Tipo(s) de Servicio</th>
+                            <th>Total</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pedido in pedidos_aceptados %}
+                        <tr>
+                            <td>{{ pedido.id }}</td>
+                            <td>{{ pedido.fecha_pedido.date }}</td>
+                            <td>{{ pedido.fecha_pedido.time }}</td>
+                            <td>{{ pedido.cliente.user.username }}</td>
+                            <td>{{ pedido.cliente.dir_cliente }}</td>
+                            <td>
+                                <ul>
+                                    {% for detalle in pedido.detalles.all %}
+                                    <li>{{ detalle.ropa.nombre }} - Cantidad: {{ detalle.cantidad }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>{{ pedido.total }}</td>
+                            <td>
+                                <form method="post" action="{% url 'cambiar_estado_pedido' pedido.id 'TE' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success" onclick="return confirm('¿Estás seguro de que deseas marcar este pedido como terminado?');">Terminar</button>
+                                </form>
+                                <a href="{% url 'gestionar_pedido' pedido.id %}" class="btn btn-primary">Gestionar</a>
+                                {% if not pedido.pago %}
+                                <a href="{% url 'realizar_pago' pedido.id %}" class="btn btn-secondary">Realizar Pago</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pedidos terminados -->
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-3">Pedidos terminados</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Cliente</th>
+                            <th>Dirección</th>
+                            <th>Tipo(s) de Servicio</th>
+                            <th>Total</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pedido in pedidos_terminados %}
+                        <tr>
+                            <td>{{ pedido.id }}</td>
+                            <td>{{ pedido.fecha_pedido.date }}</td>
+                            <td>{{ pedido.fecha_pedido.time }}</td>
+                            <td>{{ pedido.cliente.user.username }}</td>
+                            <td>{{ pedido.cliente.dir_cliente }}</td>
+                            <td>
+                                <ul>
+                                    {% for detalle in pedido.detalles.all %}
+                                    <li>{{ detalle.ropa.nombre }} - Cantidad: {{ detalle.cantidad }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>{{ pedido.total }}</td>
+                            <td>
+                                {% if not pedido.pago %}
+                                <a href="{% url 'realizar_pago' pedido.id %}" class="btn btn-secondary">Realizar Pago</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pedidos rechazados -->
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-3">Pedidos rechazados</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Cliente</th>
+                            <th>Dirección</th>
+                            <th>Tipo(s) de Servicio</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pedido in pedidos_rechazados %}
+                        <tr>
+                            <td>{{ pedido.id }}</td>
+                            <td>{{ pedido.fecha_pedido.date }}</td>
+                            <td>{{ pedido.fecha_pedido.time }}</td>
+                            <td>{{ pedido.cliente.user.username }}</td>
+                            <td>{{ pedido.cliente.dir_cliente }}</td>
+                            <td>
+                                <ul>
+                                    {% for detalle in pedido.detalles.all %}
+                                    <li>{{ detalle.ropa.nombre }} - Cantidad: {{ detalle.cantidad }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>{{ pedido.total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Lista de Usuarios</h1>
+    <div class="mt-4">
+        <a href="{% url 'crear_usuario' %}" class="btn btn-primary">Crear Usuario</a>
+        <a href="{% url 'crear_cliente' %}" class="btn btn-success">Crear Cliente</a>
+        <a href="{% url 'crear_repartidor' %}" class="btn btn-success">Crear Repartidor</a>
+    </div>  
+    </br>
+    <h4 class="mb-4">Lista de Clientes</h4>
+    <div class="table-responsive max-height-10">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Código Postal</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Correo Electrónico</th>
+                    <th scope="col">Actualizar</th>
+                    <th scope="col">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.user.first_name }}</td>
+                    <td>{{ cliente.user.last_name }}</td>
+                    <td>{{ cliente.dir_cliente }}</td>
+                    <td>{{ cliente.codigo_postal }}</td>
+                    <td>{{ cliente.tel_cliente }}</td>
+                    <td>{{ cliente.user.email }}</td>
+                    <td><a href="{% url 'actualizar_cliente' cliente_id=cliente.id %}" class="btn btn-outline-warning">Actualizar</a></td>
+                    <td><button class="btn btn-outline-danger delete-btn" data-id="{{ cliente.id }}">Eliminar</button></td>    
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay usuarios registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h4 class="mb-4">Lista de Repartidor</h4>
+    <div class="table-responsive max-height-10">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Colonia</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Correo Electrónico</th>
+                    <th scope="col">Licencia de conducir</th>
+                    <th scope="col">Actualizar</th>
+                    <th scope="col">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for repartidor in repartidores %}
+                <tr>
+                    <td>{{ repartidor.user.first_name }}</td>
+                    <td>{{ repartidor.user.last_name }}</td>
+                    <td>{{ repartidor.dir_repar }}</td>
+                    <td>{{ repartidor.colonia_repar }}</td>
+                    <td>{{ repartidor.tel_repar }}</td>
+                    <td>{{ repartidor.user.email }}</td>
+                    <td>{{ repartidor.licencia_conducir }}</td>
+                    <td><a href="{% url 'actualizar_repartidor' repartidor_id=repartidor.id %}" class="btn btn-outline-warning">Actualizar</a></td>
+                    <td><button class="btn btn-outline-danger delete-btn" data-id="{{ repartidor.id }}">Eliminar</button></td> 
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay repartidores registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const ingredienteId = this.getAttribute('data-id');
+            const confirmacion = confirm('¿Estás seguro de que quieres eliminar este ingrediente?');
+            if (confirmacion) {
+                window.location.href = `/inventario/eliminar/${ingredienteId}/`;
+            }
+        });
+    });
+
+</script>
+
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends 'base_cliente.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Panel de Usuario</h1>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Perfil</h5>
+                    <p class="card-text">Administra la información de tu perfil</p>
+                    <a href="{% url 'perfil' %}" class="btn btn-primary btn-lg btn-block">Ver Perfil</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Mis pedidos</h5>
+                    <p class="card-text">Ver, crear y editar mis pedidos</p>
+                    <a href="{% url 'listar_pedidos' %}" class="btn btn-primary btn-lg btn-block">Enviar Ropa</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ropa en Proceso</h5>
+                    <p class="card-text">Consulta el estado de tu ropa en proceso</p>
+                    <a href="{% url 'pedidos_en_proceso' %}" class="btn btn-primary btn-lg btn-block">Ver Pedidos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

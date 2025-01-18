@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Crear Repartidor Nuevo</h1>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_user" class="form-label">Usuario:</label>
+            {{ form.user }}
+            {% if form.user.errors %}
+                <div class="text-danger">
+                    {% for error in form.user.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_dir_repar" class="form-label">Dirección:</label>
+            {{ form.dir_repar }}
+            {% if form.dir_repar.errors %}
+                <div class="text-danger">
+                    {% for error in form.dir_repar.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_colonia_repar" class="form-label">Colonia:</label>
+            {{ form.colonia_repar }}
+            {% if form.colonia_repar.errors %}
+                <div class="text-danger">
+                    {% for error in form.colonia_repar.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_tel_repar" class="form-label">Teléfono:</label>
+            {{ form.tel_repar }}
+            {% if form.tel_repar.errors %}
+                <div class="text-danger">
+                    {% for error in form.tel_repar.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_licencia_conducir" class="form-label">Licencia de Conducir:</label>
+            {{ form.licencia_conducir }}
+            {% if form.licencia_conducir.errors %}
+                <div class="text-danger">
+                    {% for error in form.licencia_conducir.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_foto" class="form-label">Foto:</label>
+            {{ form.foto }}
+            {% if form.foto.errors %}
+                <div class="text-danger">
+                    {% for error in form.foto.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar Repartidor</button>
+        <a href="{% url 'ver_usuarios' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+{% endblock content %}
+

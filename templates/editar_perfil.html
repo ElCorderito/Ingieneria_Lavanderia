@@ -1,0 +1,35 @@
+{% extends 'base_cliente.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Editar Perfil</h1>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_dir_cliente" class="form-label">Dirección:</label>
+            {{ form.dir_cliente }}
+        </div>
+        <div class="mb-3">
+            <label for="id_colonia_cliente" class="form-label">Colonia:</label>
+            {{ form.colonia_cliente }}
+        </div>
+        <div class="mb-3">
+            <label for="id_codigo_postal" class="form-label">Código Postal:</label>
+            {{ form.codigo_postal }}
+        </div>
+        <div class="mb-3">
+            <label for="id_tel_cliente" class="form-label">Teléfono:</label>
+            {{ form.tel_cliente }}
+        </div>
+        <div class="mb-3">
+            <label for="id_fecha_nacimiento" class="form-label">Fecha de Nacimiento:</label>
+            {{ form.fecha_nacimiento }}
+        </div>
+        <div class="mb-3">
+            <label for="id_tarjeta_credito" class="form-label">Tarjeta de Crédito:</label>
+            {{ form.tarjeta_credito }}
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base_cliente.html' %}
+
+{% block content %}
+<h2>Listado de Pedidos</h2>
+<a href="{% url 'crear_pedido' %}" class="btn btn-success">Crear Nuevo Pedido</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID del Pedido</th>
+            <th>Servicio</th>
+            <th>Cliente</th>
+            <th>Direccion</th>
+            <th>Estado</th>
+            <th>Detalles del Pedido</th>
+            <th>Total</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pedido in pedidos %}
+        <tr>
+            <td>{{ pedido.id }}</td>
+            <td>{{ pedido.servicio }}</td>
+            <td>{{ pedido.cliente.user.username }}</td>
+            <td>{{ pedido.cliente.dir_cliente }}</td>
+            <td>{{ pedido.get_estado_display }}</td>
+            <td>
+                <ul>
+                    {% for detalle in pedido.detalles.all %}
+                        <li>{{ detalle.ropa.nombre }} - Cantidad: {{ detalle.cantidad }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>{{ pedido.total }}</td>
+            <td>
+                <a href="{% url 'editar_pedido' pedido.id %}" class="btn btn-info">Editar Detalles</a>
+                <button type="button" class="btn btn-success" onclick="confirmarEnvio({{ pedido.id }})">Enviar Pedido</button>
+                <button type="button" class="btn btn-danger" onclick="confirmarEliminacion({{ pedido.id }})">Eliminar</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+function confirmarEliminacion(id) {
+    if (confirm('¿Estás seguro de querer eliminar este pedido?')) {
+        const url = `{% url 'eliminar_pedido' 999999 %}`.replace('999999', id);
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        }).then(response => {
+            if (response.ok) {
+                window.location.reload(); // Recarga la página para actualizar la lista
+            } else {
+                alert('Error al eliminar el pedido');
+            }
+        });
+    }
+}
+
+
+function confirmarEnvio(id) {
+    if (confirm('¿Estás seguro de querer enviar este pedido?')) {
+        fetch(`{% url 'enviar_pedido' 999999 %}`.replace('999999', id), {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 'id': id })
+        }).then(response => {
+            if (response.ok) {
+                alert('Pedido enviado con éxito');
+                window.location.reload(); // Recarga la página para actualizar la lista
+            } else {
+                response.json().then(data => alert(data.error));
+            }
+        }).catch(error => alert('Error al enviar el pedido: ' + error));
+    }
+}
+
+
+</script>
+{% endblock %}
+

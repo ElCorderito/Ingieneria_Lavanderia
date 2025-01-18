@@ -1,0 +1,26 @@
+{% extends 'base_cliente.html' %}
+
+{% block content %}
+    <h1>Perfil de {{ cliente.user.username }}</h1>
+    
+    <p>Nombre: {{ cliente.user.first_name }} {{ cliente.user.last_name }}</p>
+    <p>Dirección: {{ cliente.dir_cliente }}</p>
+    <p>Colonia: {{ cliente.colonia_cliente }}</p>
+    <p>Código Postal: {{ cliente.codigo_postal }}</p>
+    <p>Teléfono: {{ cliente.tel_cliente }}</p>
+    <p>Fecha de Nacimiento: {{ cliente.fecha_nacimiento }}</p>
+    
+    {% if cliente.tarjeta_credito %}
+        <h2>Tarjeta</h2>
+        <p>Titular: {{ cliente.tarjeta_credito.nom_titular }}</p>
+        <p>Número: {{ cliente.tarjeta_credito.num_tarjeta }}</p>
+        <p>Fecha de Vencimiento: {{ cliente.tarjeta_credito.fecha_ven_tarjeta }}</p>
+        <a href="{% url 'editar_tarjeta' cliente.tarjeta_credito.id %}"><button>Editar Tarjeta</button></a>
+    {% else %}
+        <p>No tienes una tarjeta asociada</p>
+        <a href="{% url 'agregar_tarjeta' %}"><button>Agregar Tarjeta</button></a>
+    {% endif %}
+    
+    <a href="{% url 'editar_perfil' %}"><button>Editar Perfil</button></a>
+    <a href="{% url 'index_cliente' %}" class="btn btn-danger">Salir</a>
+{% endblock %}

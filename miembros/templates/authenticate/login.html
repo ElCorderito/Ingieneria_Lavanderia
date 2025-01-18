@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lavanderia</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Agrega aquí tus estilos personalizados si los tienes -->
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'landing' %}">LavaExpress</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <!-- Enlace para iniciar sesión -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login_user' %}">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register_user' %}">Regístrate</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido del Landing Page -->
+    <div class="container mt-5">
+        <h1>Login</h1>
+        <br/>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+            <input type="submit" value="Submit" class="btn btn-secondary">
+        </form>
+
+        <br/><br/>	
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Agrega aquí tus scripts personalizados si los tienes -->
+
+</body>
+
+</html>

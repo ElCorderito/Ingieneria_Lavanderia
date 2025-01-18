@@ -1,0 +1,38 @@
+{% extends 'base_cliente.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Añadir Tarjeta</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.numero_tarjeta.label_tag }}
+            {{ form.numero_tarjeta }}
+            {% if form.numero_tarjeta.errors %}
+            <div class="invalid-feedback">
+                {{ form.numero_tarjeta.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            {{ form.fecha_expiracion.label_tag }}
+            {{ form.fecha_expiracion }}
+            {% if form.fecha_expiracion.errors %}
+            <div class="invalid-feedback">
+                {{ form.fecha_expiracion.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            {{ form.cvv.label_tag }}
+            {{ form.cvv }}
+            {% if form.cvv.errors %}
+            <div class="invalid-feedback">
+                {{ form.cvv.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Añadir Tarjeta</button>
+    </form>
+</div>
+{% endblock %}

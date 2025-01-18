@@ -1,0 +1,13 @@
+{% extends "base_cliente.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Realizar Pago para el Pedido #{{ pedido.id }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Realizar Pago</button>
+        <a href="{% url 'pedidos_en_proceso' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
+

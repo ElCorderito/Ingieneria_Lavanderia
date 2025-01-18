@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Crear Cliente Nuevo</h1>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_user" class="form-label">Usuario:</label>
+            {{ form.user }}
+            {% if form.user.errors %}
+                <div class="text-danger">
+                    {% for error in form.user.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_dir_cliente" class="form-label">Dirección:</label>
+            {{ form.dir_cliente }}
+            {% if form.dir_cliente.errors %}
+                <div class="text-danger">
+                    {% for error in form.dir_cliente.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_colonia_cliente" class="form-label">Colonia:</label>
+            {{ form.colonia_cliente }}
+            {% if form.colonia_cliente.errors %}
+                <div class="text-danger">
+                    {% for error in form.colonia_cliente.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_codigo_postal" class="form-label">Código Postal:</label>
+            {{ form.codigo_postal }}
+            {% if form.codigo_postal.errors %}
+                <div class="text-danger">
+                    {% for error in form.codigo_postal.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_tel_cliente" class="form-label">Teléfono:</label>
+            {{ form.tel_cliente }}
+            {% if form.tel_cliente.errors %}
+                <div class="text-danger">
+                    {% for error in form.tel_cliente.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_fecha_nacimiento" class="form-label">Fecha de Nacimiento:</label>
+            {{ form.fecha_nacimiento }}
+            {% if form.fecha_nacimiento.errors %}
+                <div class="text-danger">
+                    {% for error in form.fecha_nacimiento.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="id_tarjeta_credito" class="form-label">Tarjeta de Crédito:</label>
+            {{ form.tarjeta_credito }}
+            {% if form.tarjeta_credito.errors %}
+                <div class="text-danger">
+                    {% for error in form.tarjeta_credito.errors %}
+                        <small>{{ error }}</small>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar Cliente</button>
+        <a href="{% url 'ver_usuarios' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+{% endblock content %}

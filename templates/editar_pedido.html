@@ -1,0 +1,58 @@
+{% extends 'base_cliente.html' %}
+
+{% block content %}
+{% load my_filters %}
+<h2>Añadir Detalles al Pedido: {{ pedido.id }}</h2>
+<h4>Cliente: {{ pedido.cliente.user.username }}</h4>
+<h4>Dirección: {{ pedido.cliente.dir_cliente }}</h4>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="{{ form.ropa.id_for_label }}" class="form-label">Ropa</label>
+        {{ form.ropa }}
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.cantidad.id_for_label }}" class="form-label">Cantidad</label>
+        {{ form.cantidad }}
+    </div>
+    <button type="submit" class="btn btn-primary">Añadir Detalle</button>
+</form>
+
+<h3>Detalles Actuales del Pedido</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ropa</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>SubTotal</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for detalle in pedido.detalles.all %}
+            <tr>
+                <td>{{ detalle.ropa.nombre }}</td>
+                <td>${{ detalle.ropa.precio }}</td>
+                <td>{{ detalle.cantidad }}</td>
+                <td>${{ detalle.ropa.precio|multiply:detalle.cantidad|floatformat:2 }}</td>
+                <td>
+                    <form action="{% url 'eliminar_detalle_pedido' detalle.id %}" method="post" onsubmit="return confirmDelete()">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h4>Total del pedido: ${{ pedido.total }}</h4>
+
+<script>
+    function confirmDelete() {
+        return confirm('¿Estás seguro de que quieres eliminar este detalle del pedido?');
+    }
+    </script>
+
+{% endblock %}
+

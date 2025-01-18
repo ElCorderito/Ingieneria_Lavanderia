@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LavaExpress</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Agrega aquí tus estilos personalizados si los tienes -->
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'landing' %}">LavaExpress</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <!-- Enlace para iniciar sesión -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login_user' %}">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register_user' %}">Registrate</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido del Landing Page -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Bienvenido a LavaExpress</h1>
+                <p>Tenemos de todo con todo en tijuana, crea tu cuenta para continuar</p>
+                <!-- Agrega más contenido informativo sobre tu empresa -->
+            </div>
+            <div class="col-md-6">
+                <!-- Aquí puedes agregar una imagen relacionada con tu empresa -->
+                <!-- <img src="{% static 'images/empresa.jpg' %}" class="img-fluid" alt="Imagen de la empresa"> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Agrega aquí tus scripts personalizados si los tienes -->
+
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+{% extends 'base_cliente.html' %}
+{% block content %}
+<div class="container">
+    <h2>Juntar Pedidos</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% if tipo_servicios %}
+            {% for servicio in tipo_servicios %}
+            <div class="card my-3">
+                <div class="card-body">
+                    <input type="checkbox" id="servicio_{{ servicio.id }}" name="servicios" value="{{ servicio.id }}">
+                    <label for="servicio_{{ servicio.id }}">
+                        <strong>Tipo de Servicio:</strong> {{ servicio.get_tipo_servicio_display }}
+                    </label>
+                    <ul class="list-unstyled">
+                        <li><strong>Cantidad de Ropa:</strong> {{ servicio.cantidad_ropa }}</li>
+                        <li><strong>Tipo de Ropa:</strong> {{ servicio.get_tipo_ropa_display }}</li>
+                        <li><strong>Prendas:</strong>
+                            <ul>
+                                {% for prenda in servicio.tipo_prenda.all %}
+                                <li>{{ prenda.nombre }}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li><strong>Detalles Extras:</strong> {{ servicio.detalles_extra }}</li>
+                        <li><strong>Dirección de Entrega:</strong> {{ servicio.dir_entrega }}</li>
+                        <li><strong>Precio:</strong> {{ servicio.precio }}</li>
+                        <!-- Agrega más campos si lo necesitas -->
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Enviar Pedidos</button>
+        {% else %}
+            <p>No hay tipos de servicio disponibles en este momento.</p>
+        {% endif %}
+        <a href="{% url 'index_cliente' %}" class="btn btn-danger">Salir</a>
+    </form>
+</div>
+{% endblock %}
+
+
